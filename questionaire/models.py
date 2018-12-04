@@ -19,3 +19,11 @@ class Questions(models.Model):
         return self.question_text
 
 
+class Responses(models.Model):
+    options = models.CharField(max_length=200)
+    next = models.PositiveIntegerField(null=True)
+    question = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    questionaire = models.ForeignKey(Questionaire, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.options
