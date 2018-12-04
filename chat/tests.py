@@ -147,7 +147,7 @@ class ChatbotTest(TestCase):
         self.assertEqual(response.json(), "Restarting Conversation: Are you hungry?->Yes->Hamburger")
 
 
-    def test_query_completion3(self):
+    def test_query_completion_case_ignore(self):
         queries = [
             "",
             "no",
