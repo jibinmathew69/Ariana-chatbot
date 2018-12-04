@@ -9,5 +9,6 @@ router.register('chat',ChatView)
 
 urlpatterns = [
     path('',include(router.urls)),
-    path('chattree',ChatTreeView.as_view(),name="chattree")
+    path('chattree',ChatTreeView.as_view(),name="chattree"),
+    path('chatbot',ChatbotView.as_view(),name="chatbot")
 ]
