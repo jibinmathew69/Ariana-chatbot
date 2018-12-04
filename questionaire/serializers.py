@@ -11,12 +11,12 @@ class QuestionaireSerializer(serializers.ModelSerializer):
 
 class QuestionsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Questionaire
+        model = Questions
         field = '__all__'
 
 
 
 class ResponsesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Questionaire
+        model = Responses
         field = '__all__'
