@@ -82,7 +82,7 @@ class ChatTreeView(APIView):
 class ChatbotView(APIView):
     def post(self,request):
 
-        if 'name' not in request.data:
+        if 'questionaire' not in request.data:
             return Response("Insufficient Parameters",status=status.HTTP_400_BAD_REQUEST)
 
         try:
@@ -101,10 +101,10 @@ class ChatbotView(APIView):
 
         #A new chat
         if not chat:
-            question = Questions.objects.get(ref_id=1,questionaire=questionaire)
+            question = Questions.objects.get(reference_id=1,questionaire=questionaire)
 
             try:
-                Chat.objects.create(questionaire=questionaire,responses=question.question_text)
+                Chat.objects.create(questionaire=questionaire,log=question.question_text)
             except:
                 return Response("Internal Server Error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -116,7 +116,7 @@ class ChatbotView(APIView):
 
             if not count:
                 Chat.objects.filter(id=chat.id).update(status=None)     #ending conversation by setting status to null
-                return Response("Restarting Conversation: "+chat.responses, status=status.HTTP_200_OK)
+                return Response("Restarting Conversation: "+chat.log, status=status.HTTP_200_OK)
 
             if "message" not in request.data:
                 return Response("Invalid input", status=status.HTTP_400_BAD_REQUEST)
@@ -126,17 +126,17 @@ class ChatbotView(APIView):
                 return Response("Invalid Option", status=status.HTTP_400_BAD_REQUEST)
 
             try:
-                question = Questions.objects.get(ref_id=valid_response[0].next,questionaire=questionaire) #fetch next question for user
+                question = Questions.objects.get(reference_id=valid_response[0].next,questionaire=questionaire) #fetch next question for user
             except Questions.DoesNotExist:
                 return Response("Internal Server Error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
             Chat.objects.filter(id=chat.id).update(status=question.reference_id,log=Concat('log', Value("->"+request.data["message"]))) #update chat state
 
-        options = Responses.objects.values_list('response',flat=True).filter(question=question.id) #fetch option for current question
+        options = Responses.objects.values_list('options',flat=True).filter(question=question.id) #fetch option for current question
 
         result = {
-            "question" : question.question,
+            "question" : question.question_text,
             "response" : options
         }
 
