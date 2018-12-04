@@ -52,7 +52,7 @@ class ChatTreeView(APIView):
         if 'file' not in request.FILES or 'name' not in request.data:
             return Response("Insufficient Parameters",status=status.HTTP_400_BAD_REQUEST)
 
-        if not request.FILES['file'].name.endswith('.json'):
+        if not request.FILES['file'].name.lower().endswith('.json'):
             return Response("Invalid File",status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
 
@@ -64,7 +64,7 @@ class ChatTreeView(APIView):
 
         try:
             data = json.loads(data)
-        except json.JSONDecodeError:
+        except:
             return Response("Invalid Json",status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
         #inserting decoded json
