@@ -10,12 +10,12 @@ class QuestionaireView(viewsets.ModelViewSet):
 
 class QuestionsView(viewsets.ModelViewSet):
     queryset = Questions.objects.all()
-    serializer_class = QuestionaireSerializer
+    serializer_class = QuestionsSerializer
 
 
 class ResponsesView(viewsets.ModelViewSet):
     queryset = Responses.objects.all()
-    serializer_class = QuestionaireSerializer
+    serializer_class = ResponsesSerializer
 
 
 
