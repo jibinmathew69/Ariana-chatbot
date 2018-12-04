@@ -7,6 +7,10 @@ from django.db import transaction
 from questionaire.models import Questionaire,Questions,Responses
 from rest_framework import status
 from rest_framework.response import Response
+from django.db.models.functions import Concat
+from django.db.models import Value
+
+
 
 class ChatView(viewsets.ModelViewSet):
     queryset = Chat.objects.all()
@@ -76,4 +80,65 @@ class ChatTreeView(APIView):
 
 
 class ChatbotView(APIView):
-    pass
+    def post(self,request):
+
+        if 'name' not in request.data:
+            return Response("Insufficient Parameters",status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            questionaire = Questionaire.objects.get(id=request.data["questionaire"])
+        except Questionaire.DoesNotExist:
+            return Response("Invalid Questionaire", status=status.HTTP_400_BAD_REQUEST)
+
+
+        #If the status for last conversation is Null indicate the conversation was conpleted, else active conversation for questionaire
+
+        try:
+            chat = Chat.objects.get(questionaire=questionaire,status__isnull= False)
+        except Chat.DoesNotExist:
+            chat = None
+
+
+        #A new chat
+        if not chat:
+            question = Questions.objects.get(ref_id=1,questionaire=questionaire)
+
+            try:
+                Chat.objects.create(questionaire=questionaire,responses=question.question_text)
+            except:
+                return Response("Internal Server Error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+        else:
+            question = Questions.objects.get(reference_id=chat.status,questionaire=questionaire)
+
+            count = Responses.objects.filter(question=question.id, questionaire=questionaire)[:1] #check if there more stages in Conversation
+
+            if not count:
+                Chat.objects.filter(id=chat.id).update(status=None)     #ending conversation by setting status to null
+                return Response("Restarting Conversation: "+chat.responses, status=200)
+
+            if "message" not in request.data:
+                return Response("Invalid input", status=status.HTTP_400_BAD_REQUEST)
+
+            valid_response = Responses.objects.filter(question=question.id,questionaire=questionaire,options__iexact=request.data["message"])[:1] #check if the user chose a valid option
+            if not valid_response:
+                return Response("Invalid Option", status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                question = Questions.objects.get(ref_id=valid_response[0].next,questionaire=questionaire) #fetch next question for user
+            except Questions.DoesNotExist:
+                return Response("Internal Server Error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+            Chat.objects.filter(id=chat.id).update(status=question.reference_id,log=Concat('log', Value("->"+request.data["message"]))) #update chat state
+
+        options = Responses.objects.values_list('response',flat=True).filter(question=question.id) #fetch option for current question
+
+        result = {
+            "question" : question.question,
+            "response" : options
+        }
+
+
+        return Response(result,status=status.HTTP_200_OK)
