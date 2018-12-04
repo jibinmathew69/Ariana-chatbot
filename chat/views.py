@@ -49,9 +49,8 @@ class ChatTreeView(APIView):
     def post(self,request):
 
         #data validation
-
         if 'file' not in request.FILES or 'name' not in request.data:
-            return Response("Insufficient Parameter",status=status.HTTP_400_BAD_REQUEST)
+            return Response("Insufficient Parameters",status=status.HTTP_400_BAD_REQUEST)
 
         if not request.FILES['file'].name.endswith('.json'):
             return Response("Invalid File",status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
