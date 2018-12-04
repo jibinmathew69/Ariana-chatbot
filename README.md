@@ -66,7 +66,7 @@ Sample reponse:<br>
 
 * When the chat tree is executed as per User input and chat tree, keep using POST API request to /chat/chatbot
 * When chat is exhausted, and there is no options for the response from user POST API request to /chat/chatbot returns 
-"Restarting Conversation:" along with chat history.<br>
+`Restarting Conversation:` along with chat history.<br>
 Sample reponse:<br>
 `"Restarting Conversation: Are you hungry?->yes->Pizza->yes"`
 
@@ -144,3 +144,5 @@ First query :
 `Are you hungry?`<br>
 The next question if the user response if `yes` is `What would you like to eat?` hence, the value for key yes is : 2
 <br>And if the user inputs `no` the question in `Ok. Call me when you're hungry.`, indicated by 3.
+
+<H4>Note :</H4> Working json file for demo upload : chat/test_data/demo.json
