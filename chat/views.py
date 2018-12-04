@@ -116,7 +116,7 @@ class ChatbotView(APIView):
 
             if not count:
                 Chat.objects.filter(id=chat.id).update(status=None)     #ending conversation by setting status to null
-                return Response("Restarting Conversation: "+chat.responses, status=200)
+                return Response("Restarting Conversation: "+chat.responses, status=status.HTTP_200_OK)
 
             if "message" not in request.data:
                 return Response("Invalid input", status=status.HTTP_400_BAD_REQUEST)
