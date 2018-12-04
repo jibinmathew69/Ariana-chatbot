@@ -5,18 +5,18 @@ from .models import Questionaire,Questions,Responses
 class QuestionaireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questionaire
-        field = '__all__'
+        fields = '__all__'
 
 
 
 class QuestionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questions
-        field = '__all__'
+        fields = '__all__'
 
 
 
 class ResponsesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Responses
-        field = '__all__'
+        fields = '__all__'
