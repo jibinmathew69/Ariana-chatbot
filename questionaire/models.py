@@ -13,7 +13,7 @@ class Questions(models.Model):
     questionaire = models.ForeignKey(Questionaire, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('ref_id', 'questionaire',)
+        unique_together = ('reference_id', 'questionaire',)
 
     def __str__(self):
         return self.question_text
