@@ -7,3 +7,15 @@ class Questionaire(models.Model):
         return self.name
 
 
+class Questions(models.Model):
+    question_text = models.CharField(max_length=200)
+    reference_id = models.PositiveIntegerField(null=True)
+    questionaire = models.ForeignKey(Questionaire, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('ref_id', 'questionaire',)
+
+    def __str__(self):
+        return self.question_text
+
+
