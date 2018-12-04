@@ -35,19 +35,19 @@ The application opens up at 127.0.0.1:8000
 
 base url = 127.0.0.1
 
-* /questionaire/ - GET/POST/PUT/DELETE for Questionaires - Use for listing questionaires
-* /questions/ - GET/POST/PUT/DELETE for Questions
-* /responses/ - GET/POST/PUT/DELETE for Response options for Questions in Questionaires
-* /chat/chat/ - GET/POST/PUT/DELETE for Chat history of User
-* /chat/chattree - POST for uploading json file of dialog tree<br>
+* `/questionaire/` - GET/POST/PUT/DELETE for Questionaires - Use for listing questionaires
+* `/questions/` - GET/POST/PUT/DELETE for Questions
+* `/responses/` - GET/POST/PUT/DELETE for Response options for Questions in Questionaires
+* `/chat/chat/` - GET/POST/PUT/DELETE for Chat history of User
+* `/chat/chattree` - POST for uploading json file of dialog tree<br>
 Parameters : <br>
-name : Questionaire Name [Text]<br>
-file : Questionaire Json File [File]
+`name` : Questionaire Name [Text]<br>
+`file` : Questionaire Json File [File]
 
-* /chat/chatbot - POST for uploading json file of dialog tree
+* `/chat/chatbot` - POST for uploading json file of dialog tree<br>
 Parameters : <br>
-questionaire : Questionaire id [Integer] (Obtained from GET /questionaire/ api)<br> 
-message : User's Input [Text]
+`questionaire` : Questionaire id [Integer] (Obtained from GET /questionaire/ api)<br> 
+`message` : User's Input [Text]
 
 #### Using Chatbot API
 
