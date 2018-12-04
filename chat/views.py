@@ -5,4 +5,4 @@ from rest_framework import viewsets
 
 class ChatView(viewsets.ModelViewSet):
     queryset = Chat.objects.all()
-    fields = '__all__'
+    serializer_class = ChatSerializer
