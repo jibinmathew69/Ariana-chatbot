@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'questionaire.apps.QuestionaireConfig'
+    'chat.apps.ChatConfig'
 ]
 
 MIDDLEWARE = [
