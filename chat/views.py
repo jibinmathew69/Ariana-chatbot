@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from .serializers import ChatSerializer
+from .models import Chat
+from rest_framework import viewsets
 
-# Create your views here.
+class ChatView(viewsets.ModelViewSet):
+    queryset = Chat.objects.all()
+    fields = '__all__'
