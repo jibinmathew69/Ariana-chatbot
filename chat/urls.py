@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 
-router.register('questionaire',ChatView)
+router.register('chat',ChatView)
 
 urlpatterns = [
     path('',include(router.urls))
