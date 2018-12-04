@@ -11,5 +11,5 @@ router.register('responses',ResponsesView)
 
 
 urlpatterns = [
-    path('',include(router))
+    path('',include(router.urls))
 ]
