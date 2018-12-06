@@ -33,7 +33,7 @@ The application opens up at 127.0.0.1:8000
 
 ## API list
 
-base url = 127.0.0.1
+base url = 127.0.0.1:8000
 
 * `/questionaire/` - GET/POST/PUT/DELETE for Questionaires - Use for listing questionaires
 * `/questions/` - GET/POST/PUT/DELETE for Questions
